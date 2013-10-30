@@ -19,9 +19,9 @@ setup(name='mikoto',
       install_requires=['Pygments',
                         'chardet',
                         'pytest',
-                        'misaka-1.0',
+                        'misaka',
                         ],
       dependency_links=[
-            'https://github.com/qingfeng/misaka/tarball/master#egg=misaka-1.0'
+            'https://github.com/qingfeng/misaka/tarball/master#egg=misaka'
         ]
       )
