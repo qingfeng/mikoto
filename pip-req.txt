@@ -1,5 +1,0 @@
-Pygments==1.6
-chardet==2.1.1
--e git+https://github.com/qingfeng/misaka.git@2fbe52692e8f304eea9d8925fd2a857916ff0ea5#egg=misaka-master
-py==1.4.17
-pytest==2.4.2
