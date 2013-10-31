@@ -4,13 +4,11 @@ from __future__ import absolute_import
 import re
 import misaka
 import chardet
-import urllib
-import hashlib
 
 from cgi import escape
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import (TextLexer, get_lexer_by_name,
-    guess_lexer_for_filename, MakoHtmlLexer, PythonLexer, RstLexer)
+                             guess_lexer_for_filename, MakoHtmlLexer, PythonLexer, RstLexer)
 from pygments.util import ClassNotFound
 from pygments import highlight
 
@@ -20,7 +18,7 @@ except ImportError:
     print "Did not install docutils"
 
 from mikoto.libs.consts import (SOURCE_FILE, NOT_GENERATED,
-                         IGNORE_FILE_EXTS, IS_GENERATED)
+                                IGNORE_FILE_EXTS, IS_GENERATED)
 from mikoto.libs.emoji import parse_emoji
 
 

@@ -4,7 +4,9 @@
 import re
 import os
 from cgi import escape
-# EMOJIS 对应 /hub/static/emoji/ 下的图片
+
+
+# EMOJIS dir: /hub/static/emoji/
 EMOJIS = [
     ':airplane:', ':alien:', ':art:', ':bear:', ':beer:', ':bike:', ':bomb:',
     ':book:', ':bulb:', ':bus:', ':cake:', ':calling:', ':clap:', ':cocktail:',
@@ -21,7 +23,6 @@ EMOJIS = [
 ]
 
 
-
 def parse_emoji(text, is_escape=True):
     if not text:
         return ''
@@ -33,6 +34,7 @@ def parse_emoji(text, is_escape=True):
         emoji_img = '<img src="/static/emoji/%s.png" height="20" width="20" align="absmiddle"/>'
     result = RE_EMOJI.sub(lambda x: emoji_img % x.group().strip(':'), text)
     return result
+
 
 def all_emojis():
     curdir = os.path.abspath(os.path.curdir)
