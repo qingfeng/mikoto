@@ -1,10 +1,11 @@
 # encoding: utf-8
 
 from __future__ import absolute_import
+from unittest import TestCase
 from mikoto.libs.text import render_markdown, get_mentions_from_text
 
 
-class TestUtils(object):
+class TestUtils(TestCase):
 
     def test_mentioned_people_from_text(self):
         text1 = "@xingben OK"
