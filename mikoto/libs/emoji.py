@@ -5,6 +5,21 @@ import re
 import os
 from cgi import escape
 
+EMOJIS = [
+    ':airplane:', ':alien:', ':art:', ':bear:', ':beer:', ':bike:', ':bomb:',
+    ':book:', ':bulb:', ':bus:', ':cake:', ':calling:', ':clap:', ':cocktail:',
+    ':code:', ':computer:', ':cool:', ':cop:', ':email:', ':feet:', ':fire:',
+    ':fish:', ':fist:', ':gift:', ':hammer:', ':heart:', ':iphone:', ':key:',
+    ':leaves:', ':lgtm:', ':lipstick:', ':lock:', ':mag:', ':mega:', ':memo:',
+    ':moneybag:', ':new:', ':octocat:', ':ok:', ':palm_tree:', ':pencil:',
+    ':punch:', ':runner:', ':scissors:', ':ship:', ':shipit:', ':ski:', ':smile:',
+    ':smoking:', ':sparkles:', ':star:', ':sunny:', ':taxi:', ':thumbsdown:',
+    ':thumbsup:', ':tm:', ':tophat:', ':train:', ':trollface:', ':v:', ':vs:',
+    ':warning:', ':wheelchair:', ':zap:', ':zzz:', ':see_no_evil:',':pig:',
+    ':hear_no_evil:', ':speak_no_evil:', ':monkey:', ':monkey_face:', ':beers:',
+    ':ruby:',
+]
+
 
 # EMOJIS dir: /hub/static/emoji/
 EMOJI_GROUPS = {
