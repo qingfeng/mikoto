@@ -7,20 +7,60 @@ from cgi import escape
 
 
 # EMOJIS dir: /hub/static/emoji/
-EMOJIS = [
-    ':airplane:', ':alien:', ':art:', ':bear:', ':beer:', ':bike:', ':bomb:',
-    ':book:', ':bulb:', ':bus:', ':cake:', ':calling:', ':clap:', ':cocktail:',
-    ':code:', ':computer:', ':cool:', ':cop:', ':email:', ':feet:', ':fire:',
-    ':fish:', ':fist:', ':gift:', ':hammer:', ':heart:', ':iphone:', ':key:',
-    ':leaves:', ':lgtm:', ':lipstick:', ':lock:', ':mag:', ':mega:', ':memo:',
-    ':moneybag:', ':new:', ':octocat:', ':ok:', ':palm_tree:', ':pencil:',
-    ':punch:', ':runner:', ':scissors:', ':ship:', ':shipit:', ':ski:', ':smile:',
-    ':smoking:', ':sparkles:', ':star:', ':sunny:', ':taxi:', ':thumbsdown:',
-    ':thumbsup:', ':tm:', ':tophat:', ':train:', ':trollface:', ':v:', ':vs:',
-    ':warning:', ':wheelchair:', ':zap:', ':zzz:', ':see_no_evil:',':pig:',
-    ':hear_no_evil:', ':speak_no_evil:', ':monkey:', ':monkey_face:', ':beers:',
-    ':ruby:',
-]
+EMOJI_GROUPS = {
+        ":mergetime:":"""
+
+:zap::zap::zap::zap::zap::zap::zap::zap::zap::zap:
+:zap::metal: M E R G E T I M E :metal::zap:
+:zap::zap::zap::zap::zap::zap::zap::zap::zap::zap:
+
+""",
+
+        ":sparklock:":"""
+
+:black_circle::point_down::black_circle:
+:point_right::sparkler::point_left:
+:black_circle::point_up_2::black_circle:
+
+""",
+
+        ":myballoon:":"""
+
+:cloud::partly_sunny::cloud::cloud::cloud::cloud::cloud:
+ 
+        :balloon:
+ 
+                    :runner::dash:
+
+""",
+
+        ":getit:":"""
+
+:balloon:
+  :raised_hand:
+
+""",
+
+        ":apollo:":"""
+
+:octocat:      :star2:             :us:
+:sparkles:                :sparkles:   :full_moon:
+:star2:     :dizzy:         :rocket:
+        :sparkles:     :collision:
+:partly_sunny:        :collision:       :sparkles:
+:zap:   :collision:
+:earth_asia:          :sparkles:         :dizzy:   
+
+""",
+}
+
+
+def parse_emoji_groups(text):
+    groups = set(RE_EMOJI_GROUPS.findall(text))
+    for group in groups:
+        text = text.replace(group, EMOJI_GROUPS[group])
+        text = text.replace(' ', "&nbsp;")
+    return text
 
 
 def parse_emoji(text, is_escape=True):
@@ -28,6 +68,7 @@ def parse_emoji(text, is_escape=True):
         return ''
     if is_escape:
         text = escape(text)
+    text = parse_emoji_groups(text)
     if RE_EMOJI_ONLY.match(text.strip()):
         emoji_img = '<img src="/static/emoji/%s.png" align="absmiddle"/>'
     else:
