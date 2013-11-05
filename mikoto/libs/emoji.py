@@ -117,3 +117,4 @@ def url_for_emoji(emoji):
 
 RE_EMOJI = re.compile(r'(' + '|'.join([re.escape(x) for x in all_emojis()]) + r')')
 RE_EMOJI_ONLY = re.compile(r'^<p>\s*(' + '|'.join([re.escape(x) for x in all_emojis()]) + r')\s*</p>$')
+RE_EMOJI_GROUPS = re.compile('|'.join([re.escape(x) for x in EMOJI_GROUPS.keys()]))
