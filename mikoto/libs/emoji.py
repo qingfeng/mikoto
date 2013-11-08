@@ -24,40 +24,31 @@ EMOJIS = [
 # EMOJIS dir: /hub/static/emoji/
 EMOJI_GROUPS = {
         ":mergetime:":"""
-
 :zap::zap::zap::zap::zap::zap::zap::zap::zap::zap:
 :zap::metal: M E R G E T I M E :metal::zap:
 :zap::zap::zap::zap::zap::zap::zap::zap::zap::zap:
-
 """,
 
         ":sparklock:":"""
-
 :black_circle::point_down::black_circle:
 :point_right::sparkler::point_left:
 :black_circle::point_up_2::black_circle:
-
 """,
 
         ":myballoon:":"""
-
 :cloud::partly_sunny::cloud::cloud::cloud::cloud::cloud:
  
         :balloon:
  
                     :runner::dash:
-
 """,
 
         ":getit:":"""
-
 :balloon:
   :raised_hand:
-
 """,
 
         ":apollo:":"""
-
 :octocat:      :star2:             :us:
 :sparkles:                :sparkles:   :full_moon:
 :star2:     :dizzy:         :rocket:
@@ -65,7 +56,6 @@ EMOJI_GROUPS = {
 :partly_sunny:        :collision:       :sparkles:
 :zap:   :collision:
 :earth_asia:          :sparkles:         :dizzy:   
-
 """,
 }
 
@@ -73,8 +63,10 @@ EMOJI_GROUPS = {
 def parse_emoji_groups(text):
     groups = set(RE_EMOJI_GROUPS.findall(text))
     for group in groups:
-        text = text.replace(group, EMOJI_GROUPS[group])
-        text = text.replace(' ', "&nbsp;")
+        group_text = EMOJI_GROUPS[group]
+        group_text = group_text.replace(' ', '&nbsp;')
+        group_text = group_text.replace('\n', "<br/>")
+        text = text.replace(group, group_text)
     return text
 
 
