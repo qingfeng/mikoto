@@ -137,7 +137,7 @@ def render_checklist(content):
         m = re.search(RE_CHECKBOX_IN_HTML, content)
         if not m:
             break
-        t = m.group(0).lstrip('<li>').rstrip('</li>')
+        t = m.group(0).replace('<li>', '').replace('</li>', '')
         if t.startswith(CHECKED):
             checked_idx = content.find(HTML_CHECKED)
             content = content[:checked_idx] + \
