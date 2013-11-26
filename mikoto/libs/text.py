@@ -36,6 +36,7 @@ UNCHECKED = '[ ]'
 HTML_CHECKED = '<li>[x]'
 HTML_UNCHECKED = '<li>[ ]'
 RE_PR_IN_MESSAGE = re.compile(r'(?:^|\s)#(\d+)(?:\s|$)')
+RE_ISSUE_IN_MESSAGE = re.compile(r'(?:^|\s)#issue(\d+)(?:\s|$)')
 
 class _CodeHtmlFormatter(HtmlFormatter):
     def wrap(self, source, outfile):
@@ -209,5 +210,6 @@ def get_mentions_from_text(text):
 def render_commit_message(message, project):
     text = parse_emoji(message)
     text = re.sub(RE_PR_IN_MESSAGE, r' <a href="/%s/newpull/\1">#\1</a> ' % project.name, text)
+    text = re.sub(RE_ISSUE_IN_MESSAGE, r' <a href="/%s/issues/\1">#\1</a> ' % project.name, text)
     text = text.decode('utf8')
     return text
