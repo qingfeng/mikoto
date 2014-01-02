@@ -1,0 +1,24 @@
+- job:
+    name: mikoto-pylint
+    description: 'mikoto TEST!'
+    scm:
+      - git:
+          branches:
+            - master
+          skip-tag: True
+          url: http://code.dapps.douban.com/qingfeng/mikoto.git
+    triggers:
+      - pollscm: '* * * * *'
+    builders:
+      - shell:
+            "pylint -E *.py |tee pylint.out"
+      - shell:
+            "py.test --junitxml=unittst.xml tests"
+    publishers:
+      - junit:
+          results: unittst.xml
+      - violations:
+          pylint:
+             pattern: pylint.out
+      - email:
+          recipients: qingfeng@douban.com
