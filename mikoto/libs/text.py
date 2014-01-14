@@ -24,7 +24,7 @@ from mikoto.libs.emoji import parse_emoji
 
 RST_RE = re.compile(r'.*\.re?st(\.txt)?$')
 RE_TICKET = re.compile(r'(?:^|\s)#(\d+)')
-RE_USER_MENTION = re.compile('(^|\W)@([a-zA-Z0-9_]+)')
+RE_USER_MENTION = re.compile(r'(^|\W)@([a-zA-Z0-9_]+)')
 RE_COMMIT = re.compile(r'(^|\s)([0-9a-f]{7,40})')
 RE_IMAGE_FILENAME = re.compile(
     r'^.+\.(?:jpg|png|gif|jpeg|mobileprovision|svg|ico)$', flags=re.IGNORECASE)
@@ -60,15 +60,25 @@ class _CodeRenderer(misaka.HtmlRenderer):
 
     def block_code(self, text, lang):
         if not lang:
-            return '\n<pre><code>%s</code></pre>\n' % escape(text.strip())
+            text = escape(text.strip())
+            text = self.__text_to_unichr(text)
+            return '\n<pre><code>%s</code></pre>\n' % text
         lexer = get_lexer_by_name(lang, stripall=True)
         formatter = HtmlFormatter()
         return highlight(text, lexer, formatter)
+
+    def codespan(self, text):
+        text = self.__text_to_unichr(text)
+        return '<code>%s</code>' % text
 
     def header(self, text, level):
         if level == 1 and re.match(r'\d+', text):
             return '#' + text
         return '<h%s>%s</h%s>' % (level, text, level)
+
+    def __text_to_unichr(self, text):
+        text = text.replace("@", "&#64;")
+        return text
 
 _generic_renderer = _CodeRenderer(misaka.HTML_HARD_WRAP |
                                   misaka.HTML_SAFELINK |

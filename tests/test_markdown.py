@@ -155,3 +155,16 @@ pls, review cc <a href="/people/hongqn/" class="user-mention">@hongqn</a> &amp; 
 <img src="http://p.dapps.douban.com/i/800482eec53311e2ac7e24b6fdf6fbfc.png" alt="ScreenShot"></p>'
         r = render_markdown(t).strip()
         assert r == html
+
+    def test_render_code_format(self):
+        text = '''@qingfeng `hello @xutao`
+
+    import this
+    @qingfeng
+'''
+        html = u'''<p><a href="/people/qingfeng/" class="user-mention">@qingfeng</a> <code>hello &#64;xutao</code></p>
+
+<pre><code>import this
+&#64;qingfeng</code></pre>'''
+        result = render_markdown(text).strip()
+        assert result == html
