@@ -80,6 +80,12 @@ class _CodeRenderer(misaka.HtmlRenderer):
         text = text.replace("@", "&#64;")
         return text
 
+    def image(self, link, title, alt_text):
+        alt_text = alt_text or ""
+        if not link.startswith("http://"):
+            link = "[PROJECT]%s" % link
+        return '<img src="%s" alt="%s">' % (link, alt_text)
+
 _generic_renderer = _CodeRenderer(misaka.HTML_HARD_WRAP |
                                   misaka.HTML_SAFELINK |
                                   misaka.HTML_SKIP_STYLE |
@@ -175,6 +181,7 @@ def render_markdown_with_project(content, project_name):
     text = render_markdown(content)
     text = re.sub(RE_TICKET, r'<a href="/%s/pull/\1/" class="issue-link">#\1</a>' % project_name, text)
     text = re.sub(RE_COMMIT, r' <a href="/%s/commit/\2">\2</a>' % project_name, text)
+    text = text.replace("[PROJECT]", "/%s/raw/master/" % project_name)
     return text
 
 def get_checkbox_count(content):
