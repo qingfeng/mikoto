@@ -168,3 +168,9 @@ pls, review cc <a href="/people/hongqn/" class="user-mention">@hongqn</a> &amp; 
 &#64;qingfeng</code></pre>'''
         result = render_markdown(text).strip()
         assert result == html
+
+    def test_render_local_image(self):
+        text = '![](Images/screenshot_004.png)'
+        html = u'<p><img src="/code/raw/master/Images/screenshot_004.png" alt=""></p>'
+        r = render_markdown_with_project(text, project_name="code").strip()
+        assert r == html
