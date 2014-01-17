@@ -12,11 +12,6 @@ from pygments.lexers import (TextLexer, get_lexer_by_name,
 from pygments.util import ClassNotFound
 from pygments import highlight
 
-try:
-    import docutils, docutils.core
-except ImportError:
-    print "Did not install docutils"
-
 from mikoto.libs.consts import (SOURCE_FILE, NOT_GENERATED,
                                 IGNORE_FILE_EXTS, IS_GENERATED)
 from mikoto.libs.emoji import parse_emoji
@@ -131,21 +126,6 @@ def highlight_code(path, src, div=False, **kwargs):
     src = highlight(src, lexer, formatter(
         linenos=True, lineanchors='L', anchorlinenos=True, encoding='utf-8', **kwargs))
     return src
-
-
-def format_md_or_rst(path, src):
-    src = decode_charset_to_unicode(src)
-    if path.endswith('.md') or path.endswith('.markdown'):
-        return render_markdown(src)
-
-    if RST_RE.match(path):
-        try:
-            return docutils.core.publish_parts(src, writer_name='html')['html_body']
-        except docutils.ApplicationError:
-            pass
-
-    lexer = TextLexer(encoding='utf-8')
-    return highlight(src, lexer, HtmlFormatter(linenos=True, lineanchors='L', anchorlinenos=True, encoding='utf-8'))
 
 
 def render_checklist(content):
