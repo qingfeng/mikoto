@@ -174,3 +174,10 @@ pls, review cc <a href="/people/hongqn/" class="user-mention">@hongqn</a> &amp; 
         html = u'<p><img src="/code/raw/master/Images/screenshot_004.png" alt=""></p>'
         r = render_markdown_with_project(text, project_name="code").strip()
         assert r == html
+
+    def test_link_and_image(self):
+        text = '[![](Images/screenshot_004.png)](Images/screenshot_004.png)'
+        html = u'<p><a href="/code/raw/master/Images/screenshot_004.png" title="">\
+<img src="/code/raw/master/Images/screenshot_004.png" alt=""></a></p>'
+        r = render_markdown_with_project(text, project_name="code").strip()
+        assert r == html

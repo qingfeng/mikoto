@@ -75,11 +75,20 @@ class _CodeRenderer(misaka.HtmlRenderer):
         text = text.replace("@", "&#64;")
         return text
 
-    def image(self, link, title, alt_text):
-        alt_text = alt_text or ""
+    def __link_to_local_project(self, link):
         if not link.startswith("http://"):
             link = "[PROJECT]%s" % link
+        return link
+
+    def image(self, link, title, alt_text):
+        alt_text = alt_text or ""
+        link = self.__link_to_local_project(link)
         return '<img src="%s" alt="%s">' % (link, alt_text)
+
+    def link(self, link, title, content):
+        title = title or ""
+        link = self.__link_to_local_project(link)
+        return '<a href="%s" title="%s">%s</a>' % (link, title, content)
 
 _generic_renderer = _CodeRenderer(misaka.HTML_HARD_WRAP |
                                   misaka.HTML_SAFELINK |
