@@ -163,32 +163,11 @@ def render_checklist(content):
     return content
 
 
-def render_markdown(content):
-    if not content:
-        content = ''
-    return _markdown_renderer.render(content)
-
-
-def render_markdown_with_project(content, project_name):
-    text = render_markdown(content)
-    text = re.sub(RE_TICKET, r'<a href="/%s/pull/\1/" class="issue-link">#\1</a>' % project_name, text)
-    text = re.sub(RE_COMMIT, r' <a href="/%s/commit/\2">\2</a>' % project_name, text)
-    text = text.replace("[PROJECT]", "/%s/raw/master/" % project_name)
-    return text
-
-
 def get_checkbox_count(content):
     m = re.findall(RE_CHECKBOX_IN_TEXT, content)
     if m:
         checked = filter(lambda x: x == CHECKED, m)
         return (len(checked), len(m))
-
-
-def render_markdown_with_team(content, team):
-    text = render_markdown(content)
-    text = re.sub(RE_TICKET, r'<a href="' + team.url +
-                  r'issues/\1/" class="issue-link">#\1</a>', text)
-    return parse_emoji(text, is_escape=False)
 
 
 def is_binary(fname):
@@ -221,9 +200,31 @@ def get_mentions_from_text(text):
     return list(users)
 
 
+# TODO: move out, not recommended
+def render_markdown_with_team(content, team):
+    text = render_markdown(content)
+    text = re.sub(RE_TICKET, r'<a href="' + team.url +
+                  r'issues/\1/" class="issue-link">#\1</a>', text)
+    return parse_emoji(text, is_escape=False)
+
+
 def render_commit_message(message, project):
     text = parse_emoji(message)
     text = re.sub(RE_PR_IN_MESSAGE, r' <a href="/%s/newpull/\1">#\1</a> ' % project.name, text)
     text = re.sub(RE_ISSUE_IN_MESSAGE, r' <a href="/%s/issues/\1">#\1</a> ' % project.name, text)
     text = text.decode('utf8')
+    return text
+
+
+def render_markdown(content):
+    if not content:
+        content = ''
+    return _markdown_renderer.render(content)
+
+
+def render_markdown_with_project(content, project_name):
+    text = render_markdown(content)
+    text = re.sub(RE_TICKET, r'<a href="/%s/pull/\1/" class="issue-link">#\1</a>' % project_name, text)
+    text = re.sub(RE_COMMIT, r' <a href="/%s/commit/\2">\2</a>' % project_name, text)
+    text = text.replace("[PROJECT]", "/%s/raw/master/" % project_name)
     return text
