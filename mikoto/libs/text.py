@@ -228,3 +228,9 @@ def render_markdown_with_project(content, project_name):
     text = re.sub(RE_COMMIT, r' <a href="/%s/commit/\2">\2</a>' % project_name, text)
     text = text.replace("[PROJECT]", "/%s/raw/master/" % project_name)
     return text
+
+
+def render(content, project_name=None):
+    if project_name:
+        return render_markdown_with_project(content, project_name)
+    return render_markdown(content)
