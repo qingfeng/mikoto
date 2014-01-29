@@ -8,7 +8,8 @@ import chardet
 from cgi import escape
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import (TextLexer, get_lexer_by_name,
-                             guess_lexer_for_filename, MakoHtmlLexer, PythonLexer, RstLexer)
+                             guess_lexer_for_filename, MakoHtmlLexer,
+                             PythonLexer, RstLexer)
 from pygments.util import ClassNotFound
 from pygments import highlight
 
@@ -32,6 +33,7 @@ HTML_CHECKED = '<li>[x]'
 HTML_UNCHECKED = '<li>[ ]'
 RE_PR_IN_MESSAGE = re.compile(r'(?:^|\s)#(\d+)(?:\s|$)')
 RE_ISSUE_IN_MESSAGE = re.compile(r'(?:^|\s)#issue(\d+)(?:\s|$)')
+
 
 class _CodeHtmlFormatter(HtmlFormatter):
     def wrap(self, source, outfile):
@@ -102,6 +104,7 @@ _markdown_renderer = misaka.Markdown(_generic_renderer,
                                      misaka.EXT_TABLES |
                                      misaka.EXT_STRIKETHROUGH)
 
+
 def decode_charset_to_unicode(charset, default='utf-8'):
     try:
         return charset.decode(default)
@@ -147,15 +150,15 @@ def render_checklist(content):
         if t.startswith(CHECKED):
             checked_idx = content.find(HTML_CHECKED)
             content = content[:checked_idx] + \
-                      '<li><label><input type="checkbox" data-item-index="%d" checked> ' % i + \
-                      t.lstrip(CHECKED).strip() + '</label></li>' + \
-                      content[checked_idx + len(t) + len('<li>') + len('</li>'):]
+                '<li><label><input type="checkbox" data-item-index="%d" checked> ' % i + \
+                t.lstrip(CHECKED).strip() + '</label></li>' + \
+                content[checked_idx + len(t) + len('<li>') + len('</li>'):]
         else:
             unchecked_idx = content.find(HTML_UNCHECKED)
             content = content[:unchecked_idx] + \
-                      '<li><label><input type="checkbox" data-item-index="%d"> ' % i + \
-                      t.lstrip(UNCHECKED).strip() + '</label></li>' + \
-                      content[unchecked_idx + len(t) + len('<li>') + len('</li>'):]
+                '<li><label><input type="checkbox" data-item-index="%d"> ' % i + \
+                t.lstrip(UNCHECKED).strip() + '</label></li>' + \
+                content[unchecked_idx + len(t) + len('<li>') + len('</li>'):]
         i += 1
     return content
 
@@ -173,17 +176,20 @@ def render_markdown_with_project(content, project_name):
     text = text.replace("[PROJECT]", "/%s/raw/master/" % project_name)
     return text
 
+
 def get_checkbox_count(content):
     m = re.findall(RE_CHECKBOX_IN_TEXT, content)
     if m:
-        checked = filter(lambda x:x == CHECKED, m)
+        checked = filter(lambda x: x == CHECKED, m)
         return (len(checked), len(m))
+
 
 def render_markdown_with_team(content, team):
     text = render_markdown(content)
     text = re.sub(RE_TICKET, r'<a href="' + team.url +
                   r'issues/\1/" class="issue-link">#\1</a>', text)
     return parse_emoji(text, is_escape=False)
+
 
 def is_binary(fname):
     ext = fname.split('.')
@@ -197,6 +203,7 @@ def is_binary(fname):
     if ext in IGNORE_FILE_EXTS or ext not in (SOURCE_FILE + NOT_GENERATED):
         return True
     return False
+
 
 def get_mentions_from_text(text):
     try:
@@ -212,6 +219,7 @@ def get_mentions_from_text(text):
         else:
             users.add(r)
     return list(users)
+
 
 def render_commit_message(message, project):
     text = parse_emoji(message)
