@@ -29,7 +29,6 @@ class TestMarkdown(TestCase):
         html = html.replace('\n', '')
         assert result == html
 
-
     def test_linebreak(self):
         text = 'hello\nworld'
         html = u'<p>hello<br>\nworld</p>'
@@ -130,8 +129,9 @@ to sa@douban.com send email @abc
         assert result == html
 
     def test_commit_url(self):
-        text ='commit 9ebcb3c a6ac123 traceback'
-        html = u'<p>commit <a href="/code/commit/9ebcb3c">9ebcb3c</a> <a href="/code/commit/a6ac123">a6ac123</a> traceback</p>'
+        text = 'commit 9ebcb3c a6ac123 traceback'
+        html = u'<p>commit <a href="/code/commit/9ebcb3c">9ebcb3c</a> \
+<a href="/code/commit/a6ac123">a6ac123</a> traceback</p>'
         result = render(text, project_name='code').strip()
         assert result == html
 
