@@ -23,5 +23,10 @@ setup(name='mikoto',
                         ],
       dependency_links=[
             'https://github.com/qingfeng/misaka/tarball/master#egg=misaka'
-        ]
-      )
+        ],
+      entry_points={
+            "console_scripts": [
+                  "mikoto = mikoto:main",
+            ],
+      }
+)
