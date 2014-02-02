@@ -15,7 +15,7 @@ EMOJIS = [
     ':punch:', ':runner:', ':scissors:', ':ship:', ':shipit:', ':ski:', ':smile:',
     ':smoking:', ':sparkles:', ':star:', ':sunny:', ':taxi:', ':thumbsdown:',
     ':thumbsup:', ':tm:', ':tophat:', ':train:', ':trollface:', ':v:', ':vs:',
-    ':warning:', ':wheelchair:', ':zap:', ':zzz:', ':see_no_evil:',':pig:',
+    ':warning:', ':wheelchair:', ':zap:', ':zzz:', ':see_no_evil:', ':pig:',
     ':hear_no_evil:', ':speak_no_evil:', ':monkey:', ':monkey_face:', ':beers:',
     ':ruby:',
 ]
@@ -23,19 +23,19 @@ EMOJIS = [
 
 # EMOJIS dir: /hub/static/emoji/
 EMOJI_GROUPS = {
-        ":mergetime:":"""
+    ":mergetime:": """
 :zap::zap::zap::zap::zap::zap::zap::zap::zap::zap:
 :zap::metal: M E R G E T I M E :metal::zap:
 :zap::zap::zap::zap::zap::zap::zap::zap::zap::zap:
 """,
 
-        ":sparklock:":"""
+    ":sparklock:": """
 :black_circle::point_down::black_circle:
 :point_right::sparkler::point_left:
 :black_circle::point_up_2::black_circle:
 """,
 
-        ":myballoon:":"""
+    ":myballoon:": """
 :cloud::partly_sunny::cloud::cloud::cloud::cloud::cloud:
  
         :balloon:
@@ -43,12 +43,12 @@ EMOJI_GROUPS = {
                     :runner::dash:
 """,
 
-        ":getit:":"""
+    ":getit:": """
 :balloon:
   :raised_hand:
 """,
 
-        ":apollo:":"""
+    ":apollo:": """
 :octocat:      :star2:             :us:
 :sparkles:                :sparkles:   :full_moon:
 :star2:     :dizzy:         :rocket:
@@ -91,7 +91,7 @@ def all_emojis():
         files = os.listdir(emoji_dir)
     else:
         realpath = os.path.dirname(os.path.realpath(__file__))
-        curdir = os.path.join(realpath,os.path.pardir,'hub/static/emoji')
+        curdir = os.path.join(realpath, os.path.pardir, 'hub/static/emoji')
         curdir = os.path.abspath(curdir)
         if os.path.isdir(curdir):
             files = os.listdir(emoji_dir)
