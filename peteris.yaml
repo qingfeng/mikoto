@@ -10,17 +10,28 @@
     triggers:
       - pollscm: '* * * * *'
     builders:
-      - shell:
-            "python setup.py install"
-      - shell:
-            "pylint -E *.py |tee pylint.out"
-      - shell:
-            "py.test --junitxml=unittst.xml tests"
+      - shell: |
+            rm -rf ~/.cache/jenkins_jobs/
+            rm -rf VENV
+            virtualenv VENV || true
+            source VENV/bin/activate
+            pip install -i http://pypim.dapps.douban.com/simple pylint
+            pip install -e git+http://code.dapps.douban.com/qingfeng/misak@master#egg=misaka
+            python setup.py install
+            hash -r
+            rm -rf pylint.out
+            pylint -E pidl > pylint.out
+            deactivate
+      - shell: |
+            source VENV/bin/activate
+            pip install -i http://pypim.dapps.douban.com/simple pytest
+            py.test --junitxml=unittst.xml tests
+            deactivate
     publishers:
       - junit:
           results: unittst.xml
       - violations:
           pylint:
-             pattern: pylint.out
+             pattern: pylint.cut
       - email:
-          recipients: qingfeng@douban.com
+          recipients: qingfeng@dcuban.com
