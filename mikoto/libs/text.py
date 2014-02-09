@@ -84,7 +84,8 @@ class _CodeRenderer(misaka.HtmlRenderer):
         return text
 
     def __link_to_local_project(self, link):
-        if not link.startswith("http://") or not link.startswith("https://"):
+        if not (link.startswith("http://")
+                or link.startswith("https://")):
             link = "[PROJECT]%s" % link
         return link
 
