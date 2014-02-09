@@ -20,6 +20,7 @@ from mikoto.libs.emoji import parse_emoji
 
 RST_RE = re.compile(r'.*\.re?st(\.txt)?$')
 RE_TICKET = re.compile(r'(?:^|\s)#(\d+)')
+RE_ISSUE = re.compile(r'(?:^|\s)#issue(\d+)')
 RE_USER_MENTION = re.compile(r'(^|\W)@([a-zA-Z0-9_]+)')
 RE_COMMIT = re.compile(r'(^|\s)([0-9a-f]{7,40})')
 RE_IMAGE_FILENAME = re.compile(
@@ -33,6 +34,11 @@ HTML_CHECKED = '<li>[x]'
 HTML_UNCHECKED = '<li>[ ]'
 RE_PR_IN_MESSAGE = re.compile(r'(?:^|\s)#(\d+)(?:\s|$)')
 RE_ISSUE_IN_MESSAGE = re.compile(r'(?:^|\s)#issue(\d+)(?:\s|$)')
+
+TICKET_LINK_TEXT = r'<a href="/%s/pull/\1/" class="issue-link">#\1</a>'
+ISSUE_LINK_TEXT = r'<a href="/%s/issues/\1/" class="issue-link">#\1</a>'
+COMMIT_LINK_TEXT = r' <a href="/%s/commit/\2">\2</a>'
+USER_LINK_TEXT = r'\1<a href="/people/\2/" class="user-mention">@\2</a>'
 
 
 class _CodeHtmlFormatter(HtmlFormatter):
@@ -53,7 +59,7 @@ class _CodeRenderer(misaka.HtmlRenderer):
             return text
         text = render_checklist(text)
         text = parse_emoji(text, is_escape=False)
-        return RE_USER_MENTION.sub(r'\1<a href="/people/\2/" class="user-mention">@\2</a>', text)
+        return RE_USER_MENTION.sub(USER_LINK_TEXT, text)
 
     def block_code(self, text, lang):
         if not lang:
@@ -135,8 +141,12 @@ def highlight_code(path, src, div=False, **kwargs):
         formatter = _CodeHtmlFormatter
     else:
         formatter = HtmlFormatter
-    src = highlight(src, lexer, formatter(
-        linenos=True, lineanchors='L', anchorlinenos=True, encoding='utf-8', **kwargs))
+
+    src = highlight(src, lexer, formatter(linenos=True,
+                                          lineanchors='L',
+                                          anchorlinenos=True,
+                                          encoding='utf-8',
+                                          **kwargs))
     return src
 
 
@@ -210,8 +220,12 @@ def render_markdown_with_team(content, team):
 
 def render_commit_message(message, project):
     text = parse_emoji(message)
-    text = re.sub(RE_PR_IN_MESSAGE, r' <a href="/%s/newpull/\1">#\1</a> ' % project.name, text)
-    text = re.sub(RE_ISSUE_IN_MESSAGE, r' <a href="/%s/issues/\1">#\1</a> ' % project.name, text)
+    text = re.sub(RE_PR_IN_MESSAGE,
+                  r' <a href="/%s/newpull/\1">#\1</a> ' % project.name,
+                  text)
+    text = re.sub(RE_ISSUE_IN_MESSAGE,
+                  r' <a href="/%s/issues/\1">#\1</a> ' % project.name,
+                  text)
     text = text.decode('utf8')
     return text
 
@@ -224,8 +238,15 @@ def render_markdown(content):
 
 def render_markdown_with_project(content, project_name):
     text = render_markdown(content)
-    text = re.sub(RE_TICKET, r'<a href="/%s/pull/\1/" class="issue-link">#\1</a>' % project_name, text)
-    text = re.sub(RE_COMMIT, r' <a href="/%s/commit/\2">\2</a>' % project_name, text)
+    text = re.sub(RE_TICKET,
+                  TICKET_LINK_TEXT % project_name,
+                  text)
+    text = re.sub(RE_ISSUE,
+                  ISSUE_LINK_TEXT % project_name,
+                  text)
+    text = re.sub(RE_COMMIT,
+                  COMMIT_LINK_TEXT % project_name,
+                  text)
     text = text.replace("[PROJECT]", "/%s/raw/master/" % project_name)
     return text
 
