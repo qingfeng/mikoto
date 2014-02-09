@@ -11,6 +11,8 @@
       - pollscm: '* * * * *'
     builders:
       - shell:
+            "python setup.py install"
+      - shell:
             "pylint -E *.py |tee pylint.out"
       - shell:
             "py.test --junitxml=unittst.xml tests"
