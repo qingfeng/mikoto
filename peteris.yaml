@@ -15,7 +15,7 @@
             virtualenv VENV || true
             source VENV/bin/activate
             pip install -i http://pypim.dapps.douban.com/simple pylint
-            pip install -e git+http://code.dapps.douban.com/qingfeng/misaka@master#egg=misaka
+            pip install -e git+http://code.dapps.douban.com/qingfeng/misaka.git@master#egg=misaka
             python setup.py install
             hash -r
             rm -rf pylint.out
