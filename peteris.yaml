@@ -11,12 +11,11 @@
       - pollscm: '* * * * *'
     builders:
       - shell: |
-            rm -rf ~/.cache/jenkins_jobs/
             rm -rf VENV
             virtualenv VENV || true
             source VENV/bin/activate
             pip install -i http://pypim.dapps.douban.com/simple pylint
-            pip install -e git+http://code.dapps.douban.com/qingfeng/misak@master#egg=misaka
+            pip install -e git+http://code.dapps.douban.com/qingfeng/misaka@master#egg=misaka
             python setup.py install
             hash -r
             rm -rf pylint.out
