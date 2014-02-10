@@ -1,19 +1,23 @@
 IGNORE_FILE_EXTS = (
     '.tar', '.zip', '.rar', '.gz', '.bz', '.bz2',
     '.bmp', '.jpeg', '.jpg', '.png', '.gif', '.svg', '.ico',
-    '.mp3', '.svn-base', '.swf', '.ttf', '.jar', '.fla' , '.flash', '.pdf',
+    '.mp3', '.svn-base', '.swf', '.ttf', '.jar', '.fla', '.flash', '.pdf',
     '.wmv', '.asf', '.asx', '.rm', '.rmvb', '.mpg', '.mpeg', '.mpe', '.pcap',
-    '.3gp', '.mov', '.mp4', '.m4v', '.avi', '.dat', '.mkv', '.flv', '.vob', 'dmg',
+    '.3gp', '.mov', '.mp4', '.m4v', '.avi', '.dat', '.mkv', '.flv', '.vob',
+    '.dmg',
 )
 
-IS_GENERATED = ('.xib', '.nib', '.storyboard', '.pbxproj', '.xcworkspacedata', '.xcuserstate')
+IS_GENERATED = ('.xib', '.nib', '.storyboard', '.pbxproj', '.xcworkspacedata',
+                '.xcuserstate')
 
-NOT_GENERATED = ('.py', '.html', '.mako', '.css', '.txt', '.rst', '.md', '.mkd', '.markdown',
-                 '.sh', '.sql', '.ini', '.gitignore', '.tmpl', '.cfg', '.hgignore',
-                 '.gitmodules', '.AUTHORS', ".scss", ".coffee", '.conf', '.applescript',
-                 '.thrift', '.log', '.json', '.gradle', '.ebuild',
-                 '.vimrc', '.bashrc', '.zshrc', '.tmux.conf', '.aliases', '.bash_profile',
-                 '.bash_prompt', '.exports', '.gitconfig', '.inputrc', '.functions')
+NOT_GENERATED = ('.py', '.html', '.mako', '.css', '.txt', '.rst', '.md',
+                 '.mkd', '.markdown', '.sh', '.sql', '.ini', '.gitignore',
+                 '.tmpl', '.cfg', '.hgignore', '.gitmodules', '.AUTHORS',
+                 ".scss", ".coffee", '.conf', '.applescript', '.thrift',
+                 '.log', '.json', '.gradle', '.ebuild', '.vimrc', '.bashrc',
+                 '.zshrc', '.tmux.conf', '.aliases', '.bash_profile',
+                 '.bash_prompt', '.exports', '.gitconfig', '.inputrc',
+                 '.functions')
 MINIFIED = ('.min.js', '.min.css')
 PICS = ('.jpeg', '.jpg', '.png', '.gif')
 
@@ -209,14 +213,14 @@ LANGUAGES = {
             }
 
 LANGUAGES_WITHOUT_EXT = {
-                        'CMakeLists.txt' : 'CMake'              ,
-                        'Cakefile'    : 'CoffeeScript'          ,
-                        'gnumakefile' : 'make'                  ,
-                        'Gnumakefile' : 'make'                  ,
-                        'makefile'    : 'make'                  ,
-                        'Makefile'    : 'make'                  ,
-                        'Rakefile'    : 'Ruby'                  ,
-                        }
+    'CMakeLists.txt': 'CMake',
+    'Cakefile': 'CoffeeScript',
+    'gnumakefile': 'make',
+    'Gnumakefile': 'make',
+    'makefile': 'make',
+    'Makefile': 'make',
+    'Rakefile': 'Ruby',
+}
 
 SOURCE_FILE = (tuple(['.' + ext for ext in LANGUAGES.keys()]) +
                tuple(LANGUAGES_WITHOUT_EXT.keys()))
