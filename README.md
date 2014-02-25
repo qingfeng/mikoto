@@ -8,12 +8,26 @@ Markdown Render Library for Douban Code
 [Mikoto](https://github.com/qingfeng/mikoto) 是 CODE 的 Markdown, reStructuredText 渲染库。
 基于 Misaka，CODE 使用的渲染相关的方法单独封装了一个库，支持emoji，Task List等高级特性。
 
-### 具体效果
+### Installation
 
+```
+pip install mikoto
+```
+
+### 使用方法
+
+#### 代码
 ```python
 >>> from mikoto.libs.text import render
 >>> render(markdown_content)
 ```
+
+#### 命令行
+```
+mikoto -f README.md
+```
+
+### 具体效果
 
 ```
 # 富士之风
