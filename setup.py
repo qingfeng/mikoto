@@ -4,7 +4,7 @@
 from setuptools import setup, find_packages
 
 setup(name='mikoto',
-      version='0.0.1',
+      version='0.0.2',
       keywords=('markdown', 'Douban'),
       description='better Markdown Render',
       license='New BSD',
