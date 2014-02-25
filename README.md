@@ -10,6 +10,11 @@ Markdown Render Library for Douban Code
 
 ### 具体效果
 
+```python
+>>> from mikoto.libs.text import render
+>>> render(markdown_content)
+```
+
 ```
 # 富士之风
 
