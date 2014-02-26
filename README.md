@@ -27,6 +27,9 @@ pip install mikoto
 mikoto -f README.md
 ```
 
+#### Demo Site
+https://github.com/qingfeng/mikoto_demo
+
 ### 具体效果
 
 ```
