@@ -7,6 +7,7 @@ setup(name='mikoto',
       version='0.0.2',
       keywords=('markdown', 'Douban'),
       description='better Markdown Render',
+      long_description=open('README.md').read(),
       license='New BSD',
 
       url='https://github.com/qingfeng/mikoto',
