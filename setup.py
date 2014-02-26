@@ -13,7 +13,7 @@ setup(name='mikoto',
       author='qingfeng',
       author_email='qingfeng@douban.com',
 
-      packages=find_packages(),
+      packages=find_packages(exclude=['tests']),
       include_package_data=True,
       platforms='any',
       install_requires=['Pygments',
