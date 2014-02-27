@@ -85,22 +85,18 @@ def parse_emoji(text, is_escape=True):
 
 
 def all_emojis():
-    curdir = os.path.abspath(os.path.curdir)
-    emoji_dir = os.path.join(curdir, 'hub/static/emoji/')
-    if os.path.isdir(emoji_dir):
-        files = os.listdir(emoji_dir)
-    else:
-        realpath = os.path.dirname(os.path.realpath(__file__))
-        curdir = os.path.join(realpath, os.path.pardir, 'hub/static/emoji')
-        curdir = os.path.abspath(curdir)
-        if os.path.isdir(curdir):
-            files = os.listdir(emoji_dir)
-        else:
-            return EMOJIS
-    if files:
-        return [':{}:'.format(fn[:-4]) for fn in files if fn.endswith('.png')]
-    else:
-        return EMOJIS
+    sub_emoji = 'hub/static/emoji'
+    emoji_dir = os.path.join(os.path.curdir, sub_emoji)
+    realpath = os.path.dirname(os.path.realpath(__file__))
+    curdir = os.path.join(realpath, os.path.pardir, sub_emoji)
+    for dir in [emoji_dir, curdir]:
+        abs_emoji_dir = os.path.abspath(dir)
+        if os.path.isdir(abs_emoji_dir):
+            files = os.listdir(abs_emoji_dir)
+            if files:
+                return [':{}:'.format(fn[:-4]) for fn in files
+                        if fn.endswith('.png')]
+    return EMOJIS
 
 
 def url_for_emoji(emoji):
