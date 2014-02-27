@@ -20,6 +20,7 @@ setup(name='mikoto',
       install_requires=['Pygments',
                         'chardet',
                         'pytest',
+                        'pytest-random',
                         'misaka==1.0.3'
                         ],
       dependency_links=[
