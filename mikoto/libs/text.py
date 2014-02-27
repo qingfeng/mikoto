@@ -158,18 +158,18 @@ def render_checklist(content):
         if not m:
             break
         t = m.group(0).replace('<li>', '').replace('</li>', '')
+        source = '<li><label><input type="checkbox" data-item-index="%d"' % i
+        end = lambda type, idx: '> ' + t.lstrip(type).strip() + \
+              '</label></li>' + content[idx + len(t) + len('<li></li>'):]
+
         if t.startswith(CHECKED):
             checked_idx = content.find(HTML_CHECKED)
-            content = content[:checked_idx] + \
-                '<li><label><input type="checkbox" data-item-index="%d" checked> ' % i + \
-                t.lstrip(CHECKED).strip() + '</label></li>' + \
-                content[checked_idx + len(t) + len('<li>') + len('</li>'):]
+            content = content[:checked_idx] + source + ' checked' + \
+                      end(CHECKED, checked_idx)
         else:
             unchecked_idx = content.find(HTML_UNCHECKED)
-            content = content[:unchecked_idx] + \
-                '<li><label><input type="checkbox" data-item-index="%d"> ' % i + \
-                t.lstrip(UNCHECKED).strip() + '</label></li>' + \
-                content[unchecked_idx + len(t) + len('<li>') + len('</li>'):]
+            content = content[:unchecked_idx] + source + \
+                      end(UNCHECKED, unchecked_idx)
         i += 1
     return content
 
