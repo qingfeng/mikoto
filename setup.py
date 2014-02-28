@@ -4,10 +4,10 @@
 from setuptools import setup, find_packages
 
 setup(name='mikoto',
-      version='0.0.3',
+      version='0.0.4',
       keywords=('markdown', 'Douban'),
       description='better Markdown Render',
-      long_description=open('README.md').read(),
+      long_description='better Markdown Render, Support emoji,Task List,GFM',
       license='New BSD',
 
       url='https://github.com/qingfeng/mikoto',
