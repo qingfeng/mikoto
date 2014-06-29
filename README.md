@@ -3,6 +3,7 @@ Markdown Render Library for Douban Code
 
 [![Build Status](https://travis-ci.org/qingfeng/mikoto.png)](https://travis-ci.org/qingfeng/mikoto)
 [![Code Quality](https://landscape.io/github/qingfeng/mikoto/master/landscape.png)](https://landscape.io/github/qingfeng/mikoto/master)
+[![PyPI version](https://badge.fury.io/py/mikoto.svg)](http://badge.fury.io/py/mikoto)
 
 ### Mikoto 是什么
 [Mikoto](https://github.com/qingfeng/mikoto) 是 CODE 的 Markdown, reStructuredText 渲染库。
