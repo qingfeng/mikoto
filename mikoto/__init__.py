@@ -1,17 +1,26 @@
-def main():
-	import sys
-	from argparse import ArgumentParser
-	from libs.text import render
+# -*- coding: utf-8 -*-
 
-	parser = ArgumentParser()
-	parser.add_argument("-f", "--file", help="Source text file")
-	argv = sys.argv[1:] or ['--help']
-	args = parser.parse_args(argv)
-	if args.file:
-		with open(args.file) as f:
-			text = f.read().decode("utf8")
-		print render(text).encode("utf8")
+from mikoto.markdown import render_markdown
+from mikoto.rst import render_rst
+from mikoto.code import render_code
+from mikoto.text import translate_to_unicode
 
+__all__ = ['Mikoto']
 
-if __name__ == '__main__':
-	main()
+class Mikoto(object):
+
+    def __init__(self, text):
+        self.text = text
+        self.unicode = translate_to_unicode(text)
+
+    @property
+    def markdown(self):
+        return render_markdown(self.unicode)
+
+    @property
+    def restructuredtext(self):
+        return render_rst(self.unicode)
+
+    @property
+    def code(self):
+        return render_code(self.unicode)
