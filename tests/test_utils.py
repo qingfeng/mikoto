@@ -2,7 +2,8 @@
 
 from __future__ import absolute_import
 from unittest import TestCase
-from mikoto.libs.text import render_markdown, get_mentions_from_text
+from mikoto.markdown import render_markdown
+from mikoto.libs.text import get_mentions_from_text
 
 
 class TestUtils(TestCase):

@@ -5,7 +5,8 @@ python:
  - 2.7
 
 install:
+ - pip install -e git+https://github.com/qingfeng/misaka.git@2fbe52692e8f304eea9d8925fd2a857916ff0ea5#egg=Misaka
  - python setup.py install
 
 script:
- - py.test tests
+ - python setup.py test

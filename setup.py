@@ -1,7 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
 from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
+
+
+class PyTest(TestCommand):
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = ['tests']
+        self.test_suite = True
+
+    def run_tests(self):
+        # import here, cause outside the eggs aren't loaded
+        import pytest
+        errno = pytest.main(self.test_args)
+        sys.exit(errno)
+
 
 setup(name='mikoto',
       version='0.0.4',
@@ -18,16 +34,14 @@ setup(name='mikoto',
       platforms='any',
       install_requires=['Pygments',
                         'chardet',
-                        'pytest',
-                        'pytest-random',
-                        'misaka==1.0.3'
-                        ],
-      dependency_links=[
-            'https://github.com/qingfeng/misaka/archive/master.zip#egg=misaka-1.0.3'
-        ],
+                        'misaka>=1.0.2',
+                        'docutils'],
+      tests_require=['pytest',
+                     'pytest-random'],
+      cmdclass={'test': PyTest},
       entry_points={
             "console_scripts": [
-                  "mikoto = mikoto:main",
+                  "mikoto = mikoto.__main__:main",
             ],
       }
 )
