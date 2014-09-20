@@ -3,15 +3,6 @@
 from __future__ import absolute_import
 import re
 
-from pygments.formatters import HtmlFormatter
-from pygments.lexers import (TextLexer,
-                             guess_lexer_for_filename,
-                             MakoHtmlLexer,
-                             PythonLexer,
-                             RstLexer)
-from pygments.util import ClassNotFound
-from pygments import highlight
-
 from mikoto.htmlrenderer import RE_USER_MENTION
 from mikoto.markdown import render_markdown
 from mikoto.checklist import get_checkbox_count
@@ -33,18 +24,6 @@ RE_ISSUE_IN_MESSAGE = re.compile(r'(?:^|\s)#issue(\d+)(?:\s|$)')
 TICKET_LINK_TEXT = r'<a href="/%s/pull/\1/" class="issue-link">#\1</a>'
 ISSUE_LINK_TEXT = r'<a href="/%s/issues/\1/" class="issue-link">#\1</a>'
 COMMIT_LINK_TEXT = r' <a href="/%s/commit/\2">\2</a>'
-
-
-class _CodeHtmlFormatter(HtmlFormatter):
-    def wrap(self, source, outfile):
-        return self._wrap_div(self._wrap_pre(self._wrap_a_line(source)))
-
-    def _wrap_a_line(self, source):
-        for i, t in source:
-            if i == 1:
-                # it's a line of formatted code
-                t = '<div>' + t + '</div>'
-            yield i, t
 
 
 def is_binary(fname):
