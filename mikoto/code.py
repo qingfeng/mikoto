@@ -39,7 +39,7 @@ def render_code(text):
     return output.decode('utf-8')
 
 
-def render_highlight_code(text, path, div=False, **kwargs):
+def render_highlight_code(text, path, **kwargs):
     try:
         if path.endswith(('.html', '.mako')):
             lexer = MakoHtmlLexer(encoding='utf-8')
@@ -57,12 +57,9 @@ def render_highlight_code(text, path, div=False, **kwargs):
         # no code highlight
         lexer = TextLexer(encoding='utf-8')
 
-    if div:
-        formatter = CodeHtmlFormatter
-    else:
-        formatter = HtmlFormatter
+    formatter = CodeHtmlFormatter
 
-    return highlight(text, lexer, formatter(linenos=True,
+    return highlight(text, lexer, formatter(linenos='inline',
                                             lineanchors='L',
                                             anchorlinenos=True,
                                             encoding='utf-8',
@@ -72,11 +69,22 @@ def render_highlight_code(text, path, div=False, **kwargs):
 class CodeHtmlFormatter(HtmlFormatter):
 
     def wrap(self, source, outfile):
-        return self._wrap_div(self._wrap_pre(self._wrap_a_line(source)))
+        return self._wrap_code(source)
 
-    def _wrap_a_line(self, source):
+    def _wrap_code(self, source):
+        yield 0, '<table>'
         for i, t in source:
             if i == 1:
                 # it's a line of formatted code
-                t = '<div>' + t + '</div>'
-                yield i, t
+                t = '<tr><td class="blob-num">%s</td></tr>' % t
+            yield i, t
+        yield 0, '</table>'
+
+    def _wrap_num(self, source):
+        for i, t in source:
+            if i == 1:
+                t = '</td><td class="blob-code">%s' % t
+            yield i, t
+
+    def _format_lines(self, tokensource):
+        return self._wrap_num(super(CodeHtmlFormatter, self)._format_lines(tokensource))
